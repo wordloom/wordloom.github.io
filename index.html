@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Glory O. — Content Strategist & Writer</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700;1,9..144,900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark:     #0D2E2C;
+    --dark-2:   #112F2D;
+    --cream:    #F5F0E8;
+    --cream-2:  #EDE6D6;
+    --rust:     #D4460F;
+    --rust-lt:  #E8856A;
+    --teal-mid: #7ABFBB;
+    --mute-d:   #4A7A76;
+    --mute-l:   #6B6B5E;
+    --line-d:   rgba(122,191,187,0.12);
+    --line-l:   rgba(13,46,44,0.1);
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--dark); color:var(--cream); font-family:'Outfit',sans-serif; font-weight:300; overflow-x:hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:18px 6vw; display:flex; justify-content:space-between; align-items:center;
+    background:rgba(13,46,44,0.95); backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line-d);
+  }
+  .brand { font-family:'Fraunces',serif; font-size:1.1rem; font-weight:700; font-style:italic; color:var(--cream); text-decoration:none; }
+  .nav-r { display:flex; gap:2rem; align-items:center; }
+  .nav-r a { font-family:'Space Mono',monospace; font-size:0.67rem; letter-spacing:0.06em; color:var(--mute-d); text-decoration:none; transition:color 0.2s; }
+  .nav-r a:hover { color:var(--cream); }
+  .nav-cta { color:var(--rust-lt) !important; border:1px solid rgba(212,70,15,0.35); padding:7px 16px; transition:background 0.2s, color 0.2s !important; }
+  .nav-cta:hover { background:var(--rust); color:var(--cream) !important; border-color:var(--rust) !important; }
+
+  /* ── HERO — DARK TEAL ── */
+  .hero {
+    background:var(--dark); min-height:100vh;
+    padding:140px 6vw 100px;
+    display:grid; grid-template-columns:1fr 400px; gap:80px; align-items:center;
+    border-bottom:1px solid var(--line-d); position:relative; overflow:hidden;
+  }
+  .hero::after {
+    content:''; position:absolute; bottom:-140px; right:-100px;
+    width:440px; height:440px; border-radius:50%;
+    border:1px solid var(--line-d); pointer-events:none;
+  }
+  .hero::before {
+    content:''; position:absolute; bottom:-70px; right:-30px;
+    width:260px; height:260px; border-radius:50%;
+    border:1px solid var(--line-d); pointer-events:none;
+  }
+  .hero-eye {
+    font-family:'Space Mono',monospace; font-size:0.64rem;
+    letter-spacing:0.22em; text-transform:uppercase; color:var(--teal-mid);
+    margin-bottom:2.2rem; opacity:0; animation:up 0.5s ease forwards 0.1s;
+  }
+  .hero-intro {
+    font-family:'Fraunces',serif; font-size:1.3rem; font-weight:300;
+    font-style:italic; color:var(--teal-mid);
+    margin-bottom:1rem;
+    opacity:0; animation:up 0.5s ease forwards 0.18s;
+  }
+  .hero h1 {
+    font-family:'Fraunces',serif; font-weight:900;
+    font-size:clamp(3rem,6.5vw,6.5rem); line-height:1.0;
+    color:var(--cream); letter-spacing:-0.03em;
+    opacity:0; animation:up 0.6s ease forwards 0.25s;
+  }
+  .hero h1 em { font-style:italic; font-weight:300; color:var(--rust-lt); }
+  .hero-sub {
+    margin-top:2rem; font-size:1rem; line-height:1.82;
+    color:var(--mute-d); max-width:500px;
+    opacity:0; animation:up 0.6s ease forwards 0.4s;
+  }
+  .hero-engage {
+    margin-top:1.4rem;
+    font-family:'Space Mono',monospace; font-size:0.68rem;
+    letter-spacing:0.08em; color:var(--teal-mid);
+    opacity:0; animation:up 0.6s ease forwards 0.5s;
+  }
+  .hero-engage span { color:var(--rust-lt); }
+  .hero-btns {
+    margin-top:2.4rem; display:flex; gap:1.2rem; align-items:center; flex-wrap:wrap;
+    opacity:0; animation:up 0.6s ease forwards 0.55s;
+  }
+  .btn-solid {
+    font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.08em;
+    background:var(--rust); color:var(--cream); padding:13px 28px;
+    text-decoration:none; transition:background 0.2s;
+  }
+  .btn-solid:hover { background:#B83A0A; }
+  .btn-ghost {
+    font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.08em;
+    color:var(--teal-mid); text-decoration:none;
+    border-bottom:1px solid var(--line-d); padding-bottom:2px;
+    transition:color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color:var(--cream); border-color:var(--teal-mid); }
+
+  /* Hero right — quick facts */
+  .hero-facts {
+    opacity:0; animation:up 0.7s ease forwards 0.5s;
+    display:flex; flex-direction:column; gap:1px;
+    background:var(--line-d); border:1px solid var(--line-d);
+  }
+  .fact {
+    background:var(--dark-2); padding:22px 26px;
+    display:flex; align-items:baseline; gap:16px;
+  }
+  .fact-n {
+    font-family:'Fraunces',serif; font-size:2rem; font-weight:900;
+    color:var(--rust-lt); line-height:1; flex-shrink:0; letter-spacing:-0.02em;
+  }
+  .fact-n em { font-style:italic; font-weight:300; }
+  .fact-l { font-size:0.82rem; line-height:1.5; color:var(--mute-d); }
+  .fact-l strong { color:var(--cream); font-weight:500; display:block; margin-bottom:2px; }
+
+  /* ── CLIENT STRIP — CREAM ── */
+  .client-strip { background:var(--cream-2); padding:22px 6vw; border-bottom:1px solid var(--line-l); }
+  .client-strip p { font-family:'Space Mono',monospace; font-size:0.7rem; letter-spacing:0.06em; color:var(--mute-l); line-height:1.8; }
+  .client-strip span { color:var(--dark); font-weight:700; }
+
+  /* ── SHARED ── */
+  .eye {
+    font-family:'Space Mono',monospace; font-size:0.6rem;
+    letter-spacing:0.24em; text-transform:uppercase;
+    margin-bottom:2.2rem; display:flex; align-items:center; gap:12px;
+  }
+  .eye::before { content:''; width:28px; height:1px; background:var(--rust); display:block; flex-shrink:0; }
+  .sec-h {
+    font-family:'Fraunces',serif; font-size:clamp(2.2rem,4vw,3.8rem);
+    font-weight:900; line-height:1.05; letter-spacing:-0.025em;
+  }
+  .sec-h em { font-style:italic; font-weight:300; }
+
+  /* ── AI — DARK-2 (moved up) ── */
+  .ai-s { background:var(--cream); padding:90px 6vw; border-bottom:1px solid var(--line-l); }
+  .ai-s .eye { color:var(--mute-l); }
+  .ai-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; margin-top:3rem; align-items:start; }
+  .ai-h { font-family:'Fraunces',serif; font-size:clamp(2.2rem,4vw,3.8rem); font-weight:900; line-height:1.05; color:var(--dark); letter-spacing:-0.025em; }
+  .ai-h em { font-style:italic; font-weight:300; color:var(--rust); }
+  .ai-body p { font-size:0.93rem; line-height:1.9; color:var(--mute-l); margin-bottom:1.3rem; }
+  .ai-body strong { color:var(--dark); font-weight:500; }
+  .ai-callout { background:var(--dark); padding:24px 28px; margin-top:0; border-left:3px solid var(--rust); }
+  .ai-callout p { font-size:0.88rem; line-height:1.75; color:var(--teal-mid); margin:0; }
+  .ai-callout strong { color:var(--cream); font-weight:500; }
+
+  /* ── ABOUT — LIGHT ── */
+  .about-s { background:var(--cream); padding:90px 6vw; border-bottom:1px solid var(--line-l); }
+  .about-s .eye { color:var(--mute-l); }
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; margin-top:3rem; align-items:start; }
+  .about-h { font-family:'Fraunces',serif; font-size:clamp(2.2rem,4vw,3.8rem); font-weight:900; line-height:1.05; color:var(--dark); letter-spacing:-0.025em; }
+  .about-h em { font-style:italic; font-weight:300; color:var(--rust); }
+  .why-list { margin-top:2.4rem; list-style:none; }
+  .why-list li {
+    font-size:0.88rem; line-height:1.8; color:var(--mute-l);
+    padding:14px 0; border-bottom:1px solid var(--line-l);
+    display:flex; gap:14px; align-items:baseline;
+  }
+  .why-list li:first-child { border-top:1px solid var(--line-l); }
+  .why-list li::before { content:'↗'; color:var(--rust); flex-shrink:0; font-size:0.75rem; }
+  .why-list li strong { color:var(--dark); font-weight:500; }
+  .about-body p { font-size:0.93rem; line-height:1.9; color:var(--mute-l); margin-bottom:1.3rem; }
+  .about-body p:last-of-type { margin-bottom:0; }
+  .about-body strong { color:var(--dark); font-weight:500; }
+  .tags { margin-top:2rem; display:flex; flex-wrap:wrap; gap:6px; }
+  .tag { font-family:'Space Mono',monospace; font-size:0.58rem; letter-spacing:0.06em; padding:5px 11px; border:1px solid var(--line-l); color:var(--mute-l); transition:border-color 0.2s, color 0.2s; }
+  .tag:hover { border-color:var(--rust); color:var(--rust); }
+
+  /* ── SERVICES — DARK ── */
+  .svc-s { background:var(--dark); padding:90px 6vw; border-bottom:1px solid var(--line-d); }
+  .svc-s .eye { color:var(--mute-d); }
+  .svc-list { margin-top:3rem; }
+  .svc-row {
+    display:grid; grid-template-columns:56px 210px 1fr; gap:40px;
+    padding:36px 0; border-bottom:1px solid var(--line-d); align-items:start;
+    opacity:0; transform:translateY(14px);
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+  .svc-row:first-child { border-top:1px solid var(--line-d); }
+  .svc-row.vis { opacity:1; transform:none; }
+  .svc-n { font-family:'Fraunces',serif; font-size:1.6rem; font-weight:300; font-style:italic; color:var(--rust); opacity:0.45; line-height:1; }
+  .svc-title { font-family:'Fraunces',serif; font-size:1.3rem; font-weight:700; color:var(--cream); line-height:1.2; letter-spacing:-0.01em; }
+  .svc-body { font-size:0.87rem; line-height:1.85; color:var(--mute-d); }
+
+  /* ── CLIPS — CREAM-2 ── */
+  .clips-s { background:var(--cream-2); padding:90px 6vw; border-bottom:1px solid var(--line-l); }
+  .clips-s .eye { color:var(--mute-l); }
+  .clips-intro { font-size:0.9rem; line-height:1.8; color:var(--mute-l); max-width:560px; margin-bottom:2.5rem; }
+  .clips-intro strong { color:var(--dark); font-weight:500; }
+  .clips-grid {
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:1px; background:var(--line-l); border:1px solid var(--line-l);
+  }
+  .clip { background:var(--cream); padding:26px 22px; text-decoration:none; display:flex; flex-direction:column; gap:9px; transition:background 0.18s; }
+  .clip:hover { background:#E8E2D4; }
+  .clip-pub { font-family:'Space Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--rust); }
+  .clip-format { font-size:0.67rem; color:var(--mute-l); }
+  .clip-title { font-size:0.86rem; line-height:1.45; color:var(--dark); flex-grow:1; }
+  .clip-cta { font-family:'Space Mono',monospace; font-size:0.62rem; color:var(--mute-l); margin-top:4px; transition:color 0.2s; }
+  .clip:hover .clip-cta { color:var(--rust); }
+  .clips-note { margin-top:1.5rem; font-size:0.78rem; color:var(--mute-l); }
+  .clips-note a { color:var(--dark); text-decoration:none; border-bottom:1px solid var(--line-l); transition:color 0.2s; }
+  .clips-note a:hover { color:var(--rust); }
+
+  /* ── TESTIMONIALS — DARK ── */
+  .testi-s { background:var(--cream-2); padding:90px 6vw; border-bottom:1px solid var(--line-l); }
+  .testi-s .eye { color:var(--mute-l); }
+  .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-l); border:1px solid var(--line-l); margin-top:3rem; }
+  .testi {
+    background:var(--cream); padding:36px 30px;
+    display:flex; flex-direction:column; gap:20px;
+    opacity:0; transform:translateY(14px);
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+  .testi.vis { opacity:1; transform:none; }
+  .testi-quote {
+    font-family:'Fraunces',serif; font-size:1.05rem; font-style:italic;
+    font-weight:300; line-height:1.65; color:var(--dark);
+  }
+  .testi-quote::before { content:'\201C'; color:var(--rust); font-size:1.8rem; line-height:0; vertical-align:-0.4em; margin-right:4px; }
+  .testi-source { font-family:'Space Mono',monospace; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--mute-l); }
+
+  /* ── STATS — LIGHT ── */
+  .stats-s {
+    background:var(--cream); display:grid; grid-template-columns:repeat(4,1fr);
+    border-bottom:1px solid var(--line-l);
+  }
+  .stat-cell {
+    padding:52px 36px; border-right:1px solid var(--line-l);
+    opacity:0; transform:translateY(14px);
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+  .stat-cell:last-child { border-right:none; }
+  .stat-cell.vis { opacity:1; transform:none; }
+  .stat-n { font-family:'Fraunces',serif; font-size:clamp(2.8rem,4.5vw,4.5rem); font-weight:900; color:var(--dark); line-height:1; margin-bottom:10px; letter-spacing:-0.03em; }
+  .stat-n em { font-style:italic; font-weight:300; color:var(--rust); }
+  .stat-what { font-size:0.82rem; font-weight:500; color:var(--dark); margin-bottom:6px; }
+  .stat-l { font-size:0.72rem; color:var(--mute-l); line-height:1.55; }
+
+  /* ── CONTACT — DARK ── */
+  .contact-s { background:var(--dark); padding:100px 6vw; }
+  .contact-s .eye { color:var(--mute-d); }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; margin-top:3rem; align-items:start; }
+  .contact-left h2 { font-family:'Fraunces',serif; font-size:clamp(2.4rem,5vw,4.5rem); font-weight:900; line-height:1.0; color:var(--cream); letter-spacing:-0.03em; }
+  .contact-left h2 em { font-style:italic; font-weight:300; color:var(--rust-lt); }
+  .contact-left p { margin-top:1.4rem; font-size:0.9rem; line-height:1.82; color:var(--mute-d); }
+  .contact-left .engage { margin-top:1.6rem; font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.08em; color:var(--teal-mid); }
+  .contact-left .engage span { color:var(--rust-lt); }
+
+  /* Form */
+  .form { display:flex; flex-direction:column; gap:16px; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .field { display:flex; flex-direction:column; gap:8px; }
+  .field label { font-family:'Space Mono',monospace; font-size:0.6rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--mute-d); }
+  .field input, .field textarea {
+    background:var(--dark-2); border:1px solid var(--line-d);
+    color:var(--cream); font-family:'Outfit',sans-serif; font-size:0.9rem;
+    font-weight:300; padding:13px 16px; outline:none;
+    transition:border-color 0.2s;
+    width:100%;
+  }
+  .field input::placeholder, .field textarea::placeholder { color:var(--mute-d); }
+  .field input:focus, .field textarea:focus { border-color:var(--teal-mid); }
+  .field textarea { resize:vertical; min-height:130px; }
+  .form-submit {
+    font-family:'Space Mono',monospace; font-size:0.7rem; letter-spacing:0.1em;
+    background:var(--rust); color:var(--cream); padding:14px 28px;
+    border:none; cursor:pointer; transition:background 0.2s;
+    align-self:flex-start; margin-top:4px;
+  }
+  .form-submit:hover { background:#B83A0A; }
+
+  /* ── FOOTER ── */
+  footer { background:var(--dark-2); padding:26px 6vw; border-top:1px solid var(--line-d); display:flex; justify-content:space-between; align-items:center; }
+  footer span { font-family:'Space Mono',monospace; font-size:0.62rem; letter-spacing:0.06em; color:var(--mute-d); }
+
+  @keyframes up {
+    from { opacity:0; transform:translateY(14px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  @media (max-width:960px) {
+    .hero { grid-template-columns:1fr; gap:48px; }
+    .hero-facts { display:none; }
+    .about-grid, .ai-grid, .contact-grid { grid-template-columns:1fr; gap:40px; }
+    .svc-row { grid-template-columns:44px 1fr; }
+    .svc-body { grid-column:2; }
+    .clips-grid { grid-template-columns:1fr 1fr; }
+    .testi-grid { grid-template-columns:1fr; }
+    .stats-s { grid-template-columns:1fr 1fr; }
+    .stat-cell:nth-child(2) { border-right:none; }
+    .stat-cell:nth-child(3) { border-top:1px solid var(--line-l); }
+    .form-row { grid-template-columns:1fr; }
+  }
+  @media (max-width:600px) {
+    nav { padding:14px 5vw; }
+    .hero { padding:110px 5vw 70px; }
+    .about-s, .svc-s, .ai-s, .clips-s, .testi-s, .contact-s { padding:64px 5vw; }
+    .clips-grid { grid-template-columns:1fr 1fr; }
+    .stats-s { grid-template-columns:1fr 1fr; }
+    footer { padding:22px 5vw; flex-direction:column; gap:8px; text-align:center; }
+    .nav-r .hs { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="#">Glory O.</a>
+  <div class="nav-r">
+    <a href="#about" class="hs">About</a>
+    <a href="#services" class="hs">Work</a>
+    <a href="#portfolio" class="hs">Writing</a>
+    <a href="#contact" class="nav-cta">Let's work together</a>
+  </div>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <p class="hero-eye">Content Strategy · SEO Writing · AI Systems</p>
+    <p class="hero-intro">Hi, I'm Glory.</p>
+    <h1>Writing that works.<br><em>Strategy that lasts.</em></h1>
+    <p class="hero-sub">I work with teams and businesses who need content that earns its place — in search, in sales conversations, and over time.</p>
+    <p class="hero-engage">Available for project-based work &nbsp;·&nbsp; <span>Open to ongoing arrangements for the right fit</span></p>
+    <div class="hero-btns">
+      <a class="btn-solid" href="#contact">Let's work together</a>
+      <a class="btn-ghost" href="#portfolio">See my writing</a>
+    </div>
+  </div>
+
+  <div class="hero-facts">
+    <div class="fact">
+      <div class="fact-n">9</div>
+      <div class="fact-l"><strong>Years of experience</strong>Tech, wellness, cannabis, real estate, business, nonprofit</div>
+    </div>
+    <div class="fact">
+      <div class="fact-n">20<em>+</em></div>
+      <div class="fact-l"><strong>Dozens of publications</strong>Across formats — articles, scripts, pages, show notes</div>
+    </div>
+    <div class="fact">
+      <div class="fact-n">3</div>
+      <div class="fact-l"><strong>Core services</strong>Writing, strategy, AI workflow design</div>
+    </div>
+    <div class="fact">
+      <div class="fact-n">∞</div>
+      <div class="fact-l"><strong>Niches covered</strong>If it needs words that work, I can write it</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CLIENT STRIP -->
+<div class="client-strip">
+  <p>Worked with <span>dispensaries</span>, <span>brands</span>, <span>agencies</span>, <span>coaches</span>, <span>SaaS companies</span>, and <span>NGOs</span>.</p>
+</div>
+
+
+<!-- ABOUT -->
+<section class="about-s" id="about">
+  <div class="eye">About</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="about-h">A bit about<br><em>who I am.</em></h2>
+      <ul class="why-list">
+        <li><strong>Nine years across niches</strong> — tech, wellness, real estate, cannabis, business, nonprofit, and public sector.</li>
+        <li><strong>Strategist at the core</strong> — every piece has a structure, a goal, and a reason for every word.</li>
+        <li><strong>Cannabis sharpened my edge</strong> — if you can rank in a regulated, stigmatized niche, you can rank anywhere.</li>
+        <li><strong>AI-literate, not AI-dependent</strong> — I design workflows that use AI as a tool, not a shortcut.</li>
+        <li><strong>Reliable and professional</strong> — clients come back. References available on request.</li>
+      </ul>
+    </div>
+    <div class="about-body">
+      <p>I'm a writer and content strategist who has spent nine years writing across wildly different industries. Regulatory policy breakdowns, semantic-rich blogs that outrank major brands, podcast show notes, and product pages that drive a third of a site's traffic — published across dozens of outlets and beyond that in work for public institutions and NGOs.</p>
+      <p>The through-line isn't the niche. It's the discipline: <strong>understand what the reader needs, build content with real architecture, and measure what matters.</strong></p>
+      <p>I bring that same rigour whether I'm writing about regulatory frameworks or SaaS onboarding or local businesses. The fundamentals don't care about your industry.</p>
+      <div class="tags">
+        <span class="tag">SEO Writing</span>
+        <span class="tag">Longform Articles</span>
+        <span class="tag">Product Copy</span>
+        <span class="tag">Landing Pages</span>
+        <span class="tag">Podcast Show Notes</span>
+        <span class="tag">Script Writing</span>
+        <span class="tag">AI Workflows</span>
+        <span class="tag">LLM Visibility</span>
+        <span class="tag">Regulated Industries</span>
+        <span class="tag">Local SEO</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SERVICES -->
+<section class="svc-s" id="services">
+  <div class="eye">What I do</div>
+  <h2 class="sec-h" style="color:var(--cream);">Three ways<br><em>I can help.</em></h2>
+  <div class="svc-list">
+    <div class="svc-row">
+      <span class="svc-n">01</span>
+      <div class="svc-title">SEO Content Writing</div>
+      <p class="svc-body">Blog posts, pillar pages, product copy, landing pages, show notes, scripts. Written for the reader first — because that's what holds up through algorithm updates and actually converts.</p>
+    </div>
+    <div class="svc-row">
+      <span class="svc-n">02</span>
+      <div class="svc-title">Content Strategy</div>
+      <p class="svc-body">Keyword research, topical authority mapping, content architecture, editorial systems. The thinking that decides what to write, why, and in what order — before a word goes down.</p>
+    </div>
+    <div class="svc-row">
+      <span class="svc-n">03</span>
+      <div class="svc-title">AI Workflow Design</div>
+      <p class="svc-body">Documented prompt frameworks and quality systems for content teams. Built for consistency at scale — accuracy checks, voice constraints, and anti-hallucination layers baked in.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- CLIPS -->
+<section class="clips-s" id="portfolio">
+  <div class="eye" style="color:var(--mute-l);">Published writing</div>
+  <h2 class="sec-h" style="color:var(--dark); margin-bottom:1rem;">Work across formats<br><em style="color:var(--rust);">& industries.</em></h2>
+  <p class="clips-intro">Nine years. <strong>Dozens of publications.</strong> Different formats — profiles, scripts, regulatory writing, show notes, landing pages, product copy.</p>
+  <div class="clips-grid">
+
+    <a class="clip" href="https://medium.com/@pressenter/who-really-is-sam-altman-15-facts-about-the-openai-ceo-68c0269f2b6c" target="_blank" rel="nofollow noopener noreferrer">
+      <span class="clip-pub">Personal</span>
+      <span class="clip-format">Tech · Editorial Profile</span>
+      <span class="clip-title">Who Really Is Sam Altman? 15 Facts About the OpenAI CEO</span>
+      <span class="clip-cta">Read →</span>
+    </a>
+
+    <a class="clip" href="https://organicbodyessentials.com/blogs/skincare-blog/what-does-toner-do-for-your-face" target="_blank" rel="nofollow noopener noreferrer">
+      <span class="clip-pub">Organic Body Essentials</span>
+      <span class="clip-format">Skincare · Blog Article</span>
+      <span class="clip-title">What Does Toner Do for Your Face — Face Toner Benefits</span>
+      <span class="clip-cta">Read →</span>
+    </a>
+
+    <a class="clip" href="https://podcasts.apple.com/gb/podcast/creating-a-profitable-business-in-30-days-with-luca-gallone/id1370793386?i=1000414361228" target="_blank" rel="nofollow noopener noreferrer">
+      <span class="clip-pub">Business Mentor Podcast</span>
+      <span class="clip-format">Business · Show Notes</span>
+      <span class="clip-title">Creating a Profitable Business in 30 Days with Luca Gallone</span>
+      <span class="clip-cta">Listen →</span>
+    </a>
+
+    <a class="clip" href="https://www.youtube.com/watch?v=hivVgdYxQyU" target="_blank" rel="nofollow noopener noreferrer">
+      <span class="clip-pub">CannDelta — YouTube</span>
+      <span class="clip-format">Script · Video Content</span>
+      <span class="clip-title">Trump's Cannabis Reform — Script Behind the Channel's Most-Watched Video (27K views)</span>
+      <span class="clip-cta">Watch →</span>
+    </a>
+
+    <a class="clip" href="https://www.nothingbuthemp.net/pages/buy-delta-9-thc-online-in-florida" target="_blank" rel="nofollow noopener noreferrer">
+      <span class="clip-pub">Nothing But Hemp</span>
+      <span class="clip-format">Primer · Landing Page</span>
+      <span class="clip-title">Buy Delta-9 THC Online in Florida</span>
+      <span class="clip-cta">View →</span>
+    </a>
+
+    <a class="clip" href="https://killakush.com/collections/mood-thc" target="_blank" rel="nofollow noopener noreferrer">
+      <span class="clip-pub">KillaKush</span>
+      <span class="clip-format">Wellness · Category Page</span>
+      <span class="clip-title">Mood THC Collection — #1 Traffic Driver, 534 Backlinks Earned</span>
+      <span class="clip-cta">View →</span>
+    </a>
+
+    <a class="clip" href="https://www.nisonco.com/2021/04/05/understanding-federal-regulations-governing-cbd-advertising/" target="_blank" rel="nofollow noopener noreferrer">
+      <span class="clip-pub">Nisonco</span>
+      <span class="clip-format">B2B · Regulatory Explainer</span>
+      <span class="clip-title">Understanding Federal Regulations Governing CBD Advertising</span>
+      <span class="clip-cta">Read →</span>
+    </a>
+
+    <a class="clip" href="https://longbottomleaf.ca/2026/02/25/cali-kush-strain/" target="_blank" rel="nofollow noopener noreferrer">
+      <span class="clip-pub">Longbottom Leaf</span>
+      <span class="clip-format">Cannabis · Strain Review</span>
+      <span class="clip-title">The Full Guide to Cali Kush Strain Effects, Flavors, and Tips</span>
+      <span class="clip-cta">Read →</span>
+    </a>
+
+  </div>
+  <p class="clips-note">
+    More on request — articles, e-books, email newsletters, reels, event documentation.
+  </p>
+</section>
+
+
+<!-- AI SYSTEMS — after testimonials -->
+<section class="ai-s" id="AI">
+  <div class="eye">A different kind of edge</div>
+  <div class="ai-grid">
+    <div>
+      <h2 class="ai-h">AI systems<br><em>done right.</em></h2>
+      <a href="https://straintypewriter.github.io/ai-workflows" target="_blank" rel="nofollow noopener noreferrer" style="display:inline-flex; align-items:center; gap:0.5rem; margin-top:1.5rem; font-family:'Space Mono',monospace; font-size:0.68rem; letter-spacing:0.08em; color:var(--rust); text-decoration:none; border-bottom:1px solid rgba(212,70,15,0.3); padding-bottom:2px; transition:color 0.2s;">See how it works →</a>
+    </div>
+    <div class="ai-body">
+      <p>Most content teams use AI to move faster. Few use it to get consistently better. I design <strong>documented AI content workflows</strong> — prompt frameworks with built-in quality gates, voice consistency rules, and factual verification layers — so output doesn't degrade at scale.</p>
+      <p>I also structure content for <strong>LLM visibility</strong>: entity-based architecture, answer-first formatting, and semantic mapping that gets pages cited by ChatGPT, Perplexity, and Copilot — not just ranked on Google.</p>
+      <div class="ai-callout">
+        <p>One client reached <strong>80% LLM visibility on ChatGPT and Copilot within two months of launch.</strong> Another cut content onboarding from six weeks to ten days.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- STATS -->
+<div class="stats-s" style="background:var(--dark); border-bottom:1px solid var(--line-d);">
+  <div class="stat-cell" style="border-right:1px solid var(--line-d);">
+    <div class="stat-n" style="color:var(--cream);">27<em>K</em></div>
+    <div class="stat-what" style="color:var(--cream);">Views in weeks</div>
+    <div class="stat-l" style="color:var(--mute-d);">One policy script — 9× the channel's average. Organic, no paid promotion.</div>
+  </div>
+  <div class="stat-cell" style="border-right:1px solid var(--line-d);">
+    <div class="stat-n" style="color:var(--cream);">73<em>%</em></div>
+    <div class="stat-what" style="color:var(--cream);">Traffic from 3 articles</div>
+    <div class="stat-l" style="color:var(--mute-d);">Three pieces now carry nearly three-quarters of a dispensary's entire site traffic.</div>
+  </div>
+  <div class="stat-cell" style="border-right:1px solid var(--line-d);">
+    <div class="stat-n" style="color:var(--cream);">534</div>
+    <div class="stat-what" style="color:var(--cream);">Backlinks earned</div>
+    <div class="stat-l" style="color:var(--mute-d);">One product page — now the #1 traffic driver on the entire site.</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-n" style="color:var(--cream);">80<em>%</em></div>
+    <div class="stat-what" style="color:var(--cream);">LLM visibility</div>
+    <div class="stat-l" style="color:var(--mute-d);">ChatGPT and Copilot citing the site's content within 2 months of launch.</div>
+  </div>
+</div>
+<div style="background:var(--dark); padding:28px 6vw; border-bottom:1px solid var(--line-d); text-align:center;">
+  <a href="https://straintypewriter.github.io/#work" target="_blank" rel="nofollow noopener noreferrer" style="font-family:'Space Mono',monospace; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--teal-mid); text-decoration:none; border-bottom:1px solid var(--line-d); padding-bottom:2px; transition:color 0.2s;">See the case studies behind the numbers →</a>
+</div>
+
+
+<!-- TESTIMONIALS -->
+<section class="testi-s" style="background:var(--cream); border-bottom:1px solid var(--line-l);">
+  <div class="eye" style="color:var(--mute-l);">What clients say</div>
+  <div class="testi-grid">
+    <div class="testi" style="background:var(--cream-2);">
+      <p class="testi-quote" style="color:var(--dark);">Glory has great personality to her writing. Making it interesting for readers and engaging.</p>
+      <span class="testi-source" style="color:var(--mute-l);">Skye B. · Affiliate Site Owner</span>
+    </div>
+    <div class="testi" style="background:var(--cream-2);">
+      <p class="testi-quote" style="color:var(--dark);">She is an amazing writer. I will be using her services again.</p>
+      <span class="testi-source" style="color:var(--mute-l);">Rebecca S. · Independent Publisher</span>
+    </div>
+    <div class="testi" style="background:var(--cream-2);">
+      <p class="testi-quote" style="color:var(--dark);">It's been a pleasure working with you! You are very talented, professional, and reliable. Wishing you all the best.</p>
+      <span class="testi-source" style="color:var(--mute-l);">Adam S. · Marketing Content Specialist</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- CONTACT -->
+<section class="contact-s" id="contact" style="background:var(--dark);">
+  <div class="eye" style="color:var(--mute-d);">Let's work together</div>
+  <div class="contact-grid">
+    <div class="contact-left">
+      <h2 style="color:var(--cream);">Tell me about<br><em style="color:var(--rust-lt);">your project.</em></h2>
+      <p style="color:var(--mute-d);">I take on a focused number of projects at a time so the work stays good. If you need content that earns its place — let's figure out if it's a fit.</p>
+      <p class="engage" style="color:var(--teal-mid);">Available for project-based work &nbsp;·&nbsp; <span style="color:var(--rust-lt);">Open to ongoing arrangements for the right fit</span></p>
+    </div>
+    <form class="form" name="contact" action="mailto:heyglory.works@gmail.com" method="POST" enctype="text/plain">
+      <div class="form-row">
+        <div class="field">
+          <label for="name" style="color:var(--mute-d);">Your name</label>
+          <input type="text" id="name" name="name" placeholder="Jane Smith" style="background:var(--dark-2); border:1px solid var(--line-d); color:var(--cream);">
+        </div>
+        <div class="field">
+          <label for="email" style="color:var(--mute-d);">Your email *</label>
+          <input type="email" id="email" name="email" placeholder="jane@company.com" required style="background:var(--dark-2); border:1px solid var(--line-d); color:var(--cream);">
+        </div>
+      </div>
+      <div class="field">
+        <label for="project" style="color:var(--mute-d);">Tell me about your project</label>
+        <textarea id="project" name="project" placeholder="What do you need, what have you tried, and what's the goal?" style="background:var(--dark-2); border:1px solid var(--line-d); color:var(--cream);"></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send message →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span>Glory O. — Content Strategist & Writer</span>
+  <span>heyglory.works@gmail.com</span>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.stat-cell, .svc-row, .testi');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('vis'), i * 80);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
