@@ -226,7 +226,7 @@
   <a class="brand" href="/">Glory O.</a>
   <div class="nav-r">
     <a href="/#about">About</a>
-    <a href="/portfolio">Writing</a>
+    <a href="/#portfolio">Writing</a>
     <a href="mailto:heyglory.works@gmail.com">Contact</a>
   </div>
 </nav>
@@ -250,7 +250,7 @@
 
       <article class="reel" data-src="reels/01-whiter-teeth.mp4">
         <div class="reel-frame">
-          <video preload="metadata" playsinline muted loop poster="reels/01-whiter-teeth.jpg">
+          <video autoplay preload="auto" playsinline muted loop poster="reels/01-whiter-teeth.jpg">
             <source src="reels/01-whiter-teeth.mp4" type="video/mp4">
           </video>
           <div class="play-tri"></div>
@@ -264,7 +264,7 @@
 
       <article class="reel" data-src="reels/02-cheese-dental.mp4">
         <div class="reel-frame">
-          <video preload="metadata" playsinline muted loop poster="reels/02-cheese-dental.jpg">
+          <video autoplay preload="auto" playsinline muted loop poster="reels/02-cheese-dental.jpg">
             <source src="reels/02-cheese-dental.mp4" type="video/mp4">
           </video>
           <div class="play-tri"></div>
@@ -278,7 +278,7 @@
 
       <article class="reel" data-src="reels/03-red-lipstick.mp4">
         <div class="reel-frame">
-          <video preload="metadata" playsinline muted loop poster="reels/03-red-lipstick.jpg">
+          <video autoplay preload="auto" playsinline muted loop poster="reels/03-red-lipstick.jpg">
             <source src="reels/03-red-lipstick.mp4" type="video/mp4">
           </video>
           <div class="play-tri"></div>
@@ -306,73 +306,78 @@
 
 <script>
   /* ───────────────────────────────────────────────
-     Instagram-style behavior:
-     - Hover (or tap) a reel → it plays muted, loops
-     - Mouse leaves → pauses + resets to poster
-     - Click sound pill → unmute / remute that reel
-     - On mobile: IntersectionObserver auto-plays
-       whichever reel is centered in the viewport
+     Instagram-style playback:
+     - All videos autoplay muted on page load (the
+       <video autoplay muted> combination is the only
+       way to bypass Chrome/Safari autoplay blocks)
+     - Click any reel → toggle sound on that one
+       (mutes the others so audio never overlaps)
+     - Off-screen videos pause via IntersectionObserver
+       to keep bandwidth and CPU in check
      ─────────────────────────────────────────────── */
   const reels = document.querySelectorAll('.reel');
 
   reels.forEach(reel => {
     const v = reel.querySelector('video');
-    const sound = reel.querySelector('.sound');
     if (!v) return;
 
-    const play = () => {
-      v.play().then(() => reel.classList.add('playing')).catch(()=>{});
-    };
-    const stop = () => {
-      v.pause();
-      v.currentTime = 0;
-      reel.classList.remove('playing');
-    };
+    // Mark as playing on load so the play-triangle overlay hides
+    v.addEventListener('playing', () => reel.classList.add('playing'), { once: true });
 
-    // Hover (desktop)
-    reel.addEventListener('mouseenter', play);
-    reel.addEventListener('mouseleave', stop);
-
-    // Tap to toggle (mobile / touch)
+    // Click reel → unmute this one, mute the others
     reel.addEventListener('click', (e) => {
-      // ignore clicks on sound button
       if (e.target.closest('.sound')) return;
-      if (v.paused) play(); else stop();
+      const turningOn = v.muted;
+      // Mute all
+      reels.forEach(r => {
+        const rv = r.querySelector('video');
+        const rs = r.querySelector('.sound');
+        if (rv) rv.muted = true;
+        if (rs) rs.textContent = 'on';
+      });
+      // Unmute this one if we were turning sound on
+      if (turningOn) {
+        v.muted = false;
+        const sound = reel.querySelector('.sound');
+        if (sound) sound.textContent = 'off';
+      }
     });
 
-    // Sound toggle
+    // Sound pill — same toggle, but lives on its own button
+    const sound = reel.querySelector('.sound');
     if (sound) {
       sound.textContent = 'on';
       sound.addEventListener('click', (e) => {
         e.stopPropagation();
-        v.muted = !v.muted;
-        sound.textContent = v.muted ? 'on' : 'off';
-        sound.setAttribute('aria-label', v.muted ? 'Unmute sound' : 'Mute sound');
-        // Above is intentionally inverted: button label reads as the
-        // *action*, so "on" means "tap to turn sound on" (it's currently muted).
+        const turningOn = v.muted;
+        reels.forEach(r => {
+          const rv = r.querySelector('video');
+          const rs = r.querySelector('.sound');
+          if (rv) rv.muted = true;
+          if (rs) rs.textContent = 'on';
+        });
+        if (turningOn) {
+          v.muted = false;
+          sound.textContent = 'off';
+        }
       });
     }
   });
 
-  /* Mobile: autoplay the most-visible reel */
-  if (window.matchMedia('(max-width: 760px)').matches && 'IntersectionObserver' in window) {
-    let active = null;
+  /* Pause off-screen videos to save bandwidth/CPU.
+     Runs on every viewport, not just mobile. */
+  if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        const reel = entry.target;
-        const v = reel.querySelector('video');
+        const v = entry.target.querySelector('video');
         if (!v) return;
-        if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-          if (active && active !== reel) {
-            const av = active.querySelector('video');
-            av.pause(); av.currentTime = 0;
-            active.classList.remove('playing');
-          }
-          active = reel;
-          v.play().then(() => reel.classList.add('playing')).catch(()=>{});
+        if (entry.isIntersecting && entry.intersectionRatio > 0.4) {
+          v.play().catch(()=>{});
+        } else {
+          v.pause();
         }
       });
-    }, { threshold: [0, 0.6, 1], root: document.querySelector('.rail') });
+    }, { threshold: [0, 0.4, 1], root: document.querySelector('.rail') });
     reels.forEach(r => io.observe(r));
   }
 
