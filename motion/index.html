@@ -301,85 +301,86 @@
 <footer>
   <span>Glory O. — Motion / Reels</span>
   <span class="foot-mid">Edited by hand &nbsp;·&nbsp; Ready to scale with AI workflows</span>
-  <span><a href="mailto:heyglory.works@gmail.com">Let's work together!</a></span>
+  <span><a href="mailto:heyglory.works@gmail.com">heyglory.works@gmail.com</a></span>
 </footer>
 
 <script>
   /* ───────────────────────────────────────────────
-     Instagram-style playback:
-     - All videos autoplay muted on page load (the
-       <video autoplay muted> combination is the only
-       way to bypass Chrome/Safari autoplay blocks)
-     - Click any reel → toggle sound on that one
-       (mutes the others so audio never overlaps)
-     - Off-screen videos pause via IntersectionObserver
-       to keep bandwidth and CPU in check
+     Playback model:
+     - <video autoplay muted> tries to play on load
+     - If browser blocks autoplay (Data Saver, extension,
+       per-site setting), the FIRST click/tap anywhere on
+       the page triggers play() on every video. That's a
+       valid user gesture, so the browser allows it.
+     - Click a reel → toggle sound on that one;
+       audio never overlaps because the others mute.
      ─────────────────────────────────────────────── */
   const reels = document.querySelectorAll('.reel');
+
+  const startAll = () => {
+    reels.forEach(r => {
+      const rv = r.querySelector('video');
+      if (rv && rv.paused) rv.play().catch(()=>{});
+    });
+  };
+
+  const toggleSoundFor = (targetReel, targetVideo) => {
+    const turningOn = targetVideo.muted;
+    reels.forEach(r => {
+      const rv = r.querySelector('video');
+      const rs = r.querySelector('.sound');
+      if (rv) rv.muted = true;
+      if (rs) rs.textContent = 'on';
+    });
+    if (turningOn) {
+      targetVideo.muted = false;
+      const sound = targetReel.querySelector('.sound');
+      if (sound) sound.textContent = 'off';
+    }
+  };
 
   reels.forEach(reel => {
     const v = reel.querySelector('video');
     if (!v) return;
 
-    // Mark as playing on load so the play-triangle overlay hides
-    v.addEventListener('playing', () => reel.classList.add('playing'), { once: true });
-
-    // Click reel → unmute this one, mute the others
-    reel.addEventListener('click', (e) => {
-      if (e.target.closest('.sound')) return;
-      const turningOn = v.muted;
-      // Mute all
-      reels.forEach(r => {
-        const rv = r.querySelector('video');
-        const rs = r.querySelector('.sound');
-        if (rv) rv.muted = true;
-        if (rs) rs.textContent = 'on';
-      });
-      // Unmute this one if we were turning sound on
-      if (turningOn) {
-        v.muted = false;
-        const sound = reel.querySelector('.sound');
-        if (sound) sound.textContent = 'off';
-      }
+    // Hide the play-triangle overlay once the video actually starts playing
+    v.addEventListener('playing', () => reel.classList.add('playing'));
+    v.addEventListener('pause', () => {
+      // Keep '.playing' class while looping; only drop it if reset to start
+      if (v.currentTime === 0) reel.classList.remove('playing');
     });
 
-    // Sound pill — same toggle, but lives on its own button
+    // Click the reel → make sure everything's playing, then toggle sound on this one
+    reel.addEventListener('click', (e) => {
+      if (e.target.closest('.sound')) return;
+      startAll();
+      toggleSoundFor(reel, v);
+    });
+
+    // Sound pill — same behavior, just lives on its own button
     const sound = reel.querySelector('.sound');
     if (sound) {
       sound.textContent = 'on';
       sound.addEventListener('click', (e) => {
         e.stopPropagation();
-        const turningOn = v.muted;
-        reels.forEach(r => {
-          const rv = r.querySelector('video');
-          const rs = r.querySelector('.sound');
-          if (rv) rv.muted = true;
-          if (rs) rs.textContent = 'on';
-        });
-        if (turningOn) {
-          v.muted = false;
-          sound.textContent = 'off';
-        }
+        startAll();
+        toggleSoundFor(reel, v);
       });
     }
   });
 
-  /* Pause off-screen videos to save bandwidth/CPU.
-     Runs on every viewport, not just mobile. */
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        const v = entry.target.querySelector('video');
-        if (!v) return;
-        if (entry.isIntersecting && entry.intersectionRatio > 0.4) {
-          v.play().catch(()=>{});
-        } else {
-          v.pause();
-        }
-      });
-    }, { threshold: [0, 0.4, 1], root: document.querySelector('.rail') });
-    reels.forEach(r => io.observe(r));
-  }
+  /* Safety net: the FIRST tap/click anywhere on the page starts
+     every video. This recovers from any autoplay block, since
+     a click is a guaranteed user gesture. Runs once and removes itself. */
+  const firstInteraction = () => {
+    startAll();
+    document.removeEventListener('click', firstInteraction, true);
+    document.removeEventListener('touchstart', firstInteraction, true);
+    document.removeEventListener('keydown', firstInteraction, true);
+  };
+  document.addEventListener('click', firstInteraction, true);
+  document.addEventListener('touchstart', firstInteraction, true);
+  document.addEventListener('keydown', firstInteraction, true);
 
   /* Desktop: vertical wheel scrolls the rail horizontally */
   const rail = document.getElementById('rail');
