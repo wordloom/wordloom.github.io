@@ -189,6 +189,33 @@
   .svc-title { font-family:'Fraunces',serif; font-size:1.3rem; font-weight:700; color:var(--cream); line-height:1.2; letter-spacing:-0.01em; }
   .svc-body { font-size:0.87rem; line-height:1.85; color:var(--mute-d); }
 
+  /* ── COLLECTIONS ── */
+  .col-grid {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line-l); border:1px solid var(--line-l); margin-top:3rem;
+  }
+  .col-card { background:var(--cream); padding:34px 26px; text-decoration:none; display:flex; flex-direction:column; transition:background 0.2s; }
+  .col-card:hover { background:#E8E2D4; }
+  .col-num { font-family:'Fraunces',serif; font-size:1.25rem; font-style:italic; font-weight:300; color:var(--rust); opacity:0.45; margin-bottom:12px; }
+  .col-title { font-family:'Fraunces',serif; font-size:1.5rem; font-weight:900; color:var(--dark); line-height:1.03; letter-spacing:-0.028em; }
+  .col-tags { font-family:'Space Mono',monospace; font-size:0.56rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--rust); margin-top:12px; line-height:1.75; flex-grow:1; }
+  .col-btn { align-self:flex-start; font-family:'Space Mono',monospace; font-size:0.62rem; letter-spacing:0.08em; background:var(--rust); color:var(--cream); padding:11px 20px; margin-top:28px; transition:background 0.2s; }
+  .col-card:hover .col-btn { background:#B83A0A; }
+
+  /* ── COLLAPSIBLE INDIVIDUAL PIECES ── */
+  .clips-more { margin-top:3.4rem; border-top:1px solid var(--line-l); }
+  .clips-more > summary {
+    list-style:none; cursor:pointer; padding:22px 0 0;
+    font-family:'Space Mono',monospace; font-size:0.66rem; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--mute-l);
+    display:flex; align-items:center; gap:12px; transition:color 0.2s;
+  }
+  .clips-more > summary::-webkit-details-marker { display:none; }
+  .clips-more > summary:hover { color:var(--rust); }
+  .clips-more > summary .tog { color:var(--rust); font-size:0.9rem; line-height:1; transition:transform 0.2s; display:inline-block; }
+  .clips-more[open] > summary .tog { transform:rotate(45deg); }
+  .clips-more .clips-grid { margin-top:1.8rem; }
+
   /* ── CLIPS — CREAM-2 ── */
   .clips-s { background:var(--cream-2); padding:90px 6vw; border-bottom:1px solid var(--line-l); }
   .clips-s .eye { color:var(--mute-l); }
@@ -293,6 +320,8 @@
     .svc-row { grid-template-columns:44px 1fr; }
     .svc-body { grid-column:2; }
     .clips-grid { grid-template-columns:1fr 1fr; }
+    .col-grid { grid-template-columns:1fr 1fr; }
+    .col-card { padding:30px 24px; }
     .testi-grid { grid-template-columns:1fr; }
     .stats-s { grid-template-columns:1fr 1fr; }
     .stat-cell:nth-child(2) { border-right:none; }
@@ -304,6 +333,12 @@
     .hero { padding:110px 5vw 70px; }
     .about-s, .svc-s, .ai-s, .clips-s, .testi-s, .contact-s { padding:64px 5vw; }
     .clips-grid { grid-template-columns:1fr 1fr; }
+    .col-grid { grid-template-columns:1fr 1fr; }
+    .col-card { padding:22px 16px; }
+    .col-num { font-size:1.05rem; margin-bottom:9px; }
+    .col-title { font-size:1.15rem; }
+    .col-tags { font-size:0.52rem; letter-spacing:0.12em; margin-top:10px; }
+    .col-btn { font-size:0.55rem; padding:9px 14px; margin-top:20px; letter-spacing:0.05em; }
     .stats-s { grid-template-columns:1fr 1fr; }
     footer { padding:22px 5vw; flex-direction:column; gap:8px; text-align:center; }
     .nav-r .hs { display:none; }
@@ -318,7 +353,7 @@
     <a href="#about" class="hs">About</a>
     <a href="#services" class="hs">Work</a>
     <a href="#portfolio" class="hs">Writing</a>
-    <a href="#contact" class="nav-cta">Let's work together</a>
+    <a href="#contact" class="nav-cta">Contact</a>
   </div>
 </nav>
 
@@ -330,9 +365,8 @@
 
     <h1>Sharper Strategy.<br><em>Stronger Pages.</em></h1>
     <p class="hero-sub"><strong>Hi, I'm Glory</strong>. I work with teams and businesses who need content that earns its place—in search, in sales conversations, and over time.</p>
-    <p class="hero-engage">Available for project-based work &nbsp;·&nbsp; <span>Open to ongoing arrangements for the right fit</span></p>
     <div class="hero-btns">
-      <a class="btn-solid" href="#contact">Let's work together</a>
+      <a class="btn-solid" href="#contact">Get in touch</a>
       <a class="btn-ghost" href="#portfolio">See my writing</a>
     </div>
   </div>
@@ -344,7 +378,7 @@
     </div>
     <div class="fact">
       <div class="fact-n">100+<em></em></div>
-      <div class="fact-l"><strong>Published Work</strong>Across formats — articles, scripts, pages, show notes, etc.</div>
+      <div class="fact-l"><strong>Published Work</strong>Across formats — articles, scripts, pages, show notes, and more</div>
     </div>
     <div class="fact">
       <div class="fact-n">3</div>
@@ -360,7 +394,7 @@
 
 <!-- CLIENT STRIP -->
 <div class="client-strip">
-  <p>Worked with <span>brands in regulated industries</span>, <span>marketing agencies</span>, <span>SAAS teams</span>, <span>local businesses</span>, <span>SaaS companies</span>, and <span>NGOs</span>.</p>
+  <p>Worked with <span>brands in regulated industries</span>, <span>marketing agencies</span>, <span>SaaS teams</span>, <span>local businesses</span>, and <span>NGOs</span>.</p>
 </div>
 
 
@@ -425,9 +459,39 @@
 
 <!-- CLIPS -->
 <section class="clips-s" id="portfolio">
-  <div class="eye" style="color:var(--mute-l);">Published writing</div>
-  <h2 class="sec-h" style="color:var(--dark); margin-bottom:1rem;">Work across formats<br><em style="color:var(--rust);">& industries.</em></h2>
-  <p class="clips-intro">Nine years. <strong>Dozens of publications.</strong> Different formats — profiles, scripts, regulatory writing, show notes, landing pages, product copy.</p>
+  <div class="eye" style="color:var(--mute-l);">Selected work</div>
+  <h2 class="sec-h" style="color:var(--dark); margin-bottom:1rem;">Work by<br><em style="color:var(--rust);">practice area.</em></h2>
+  <p class="clips-intro">Nine years. <strong>Dozens of publications.</strong> Each collection includes brief context on the audience, my contribution, or the constraint that shaped the work.</p>
+
+  <div class="col-grid">
+    <a class="col-card" href="b2bwriting/">
+      <span class="col-num">01</span>
+      <div class="col-title">B2B Writing</div>
+      <div class="col-tags">Technical · Service Pages · Conversion</div>
+      <span class="col-btn">View samples →</span>
+    </a>
+    <a class="col-card" href="regulatorywriting/">
+      <span class="col-num">02</span>
+      <div class="col-title">Legal &amp; Regulatory</div>
+      <div class="col-tags">Compliance · Multi-Jurisdiction · Research</div>
+      <span class="col-btn">View samples →</span>
+    </a>
+    <a class="col-card" href="consumerbrandwriting/">
+      <span class="col-num">03</span>
+      <div class="col-title">Consumer Brand</div>
+      <div class="col-tags">DTC · Product · Local</div>
+      <span class="col-btn">View samples →</span>
+    </a>
+    <a class="col-card" href="motion/">
+      <span class="col-num">04</span>
+      <div class="col-title">Motion</div>
+      <div class="col-tags">Short-form · Video</div>
+      <span class="col-btn">View samples →</span>
+    </a>
+  </div>
+
+  <details class="clips-more">
+    <summary><span class="tog">+</span> Individual published pieces</summary>
   <div class="clips-grid">
 
     <a class="clip" href="https://medium.com/@pressenter/who-really-is-sam-altman-15-facts-about-the-openai-ceo-68c0269f2b6c" target="_blank" rel="nofollow noopener noreferrer">
@@ -488,8 +552,9 @@
 
   </div>
   <p class="clips-note">
-    More on request — articles, e-books, email newsletters, reels, event documentation.
+    More available — articles, e-books, email newsletters, reels, event documentation.
   </p>
+  </details>
 </section>
 
 
@@ -566,9 +631,8 @@
   <div class="eye" style="color:var(--mute-d);">Let's work together</div>
   <div class="contact-grid">
     <div class="contact-left">
-      <h2 style="color:var(--cream);">Tell me about<br><em style="color:var(--rust-lt);">your project.</em></h2>
-      <p style="color:var(--mute-d);">I take on a focused number of projects at a time so the work stays good. If you need content that earns its place — let's figure out if it's a fit.</p>
-      <p class="engage" style="color:var(--teal-mid);">Available for project-based work &nbsp;·&nbsp; <span style="color:var(--rust-lt);">Open to ongoing arrangements for the right fit</span></p>
+      <h2 style="color:var(--cream);">Start a<br><em style="color:var(--rust-lt);">conversation.</em></h2>
+      <p style="color:var(--mute-d);">If you're hiring for content strategy or senior writing—I'd like to hear about the role. Also open to projects.</p>
     </div>
     <form class="form" name="contact" action="mailto:heyglory.works@gmail.com" method="POST" enctype="text/plain">
       <div class="form-row">
@@ -582,7 +646,7 @@
         </div>
       </div>
       <div class="field">
-        <label for="project" style="color:var(--mute-d);">Tell me about your project</label>
+        <label for="project" style="color:var(--mute-d);">What's the story?</label>
         <textarea id="project" name="project" placeholder="What do you need, what have you tried, and what's the goal?" style="background:var(--dark-2); border:1px solid var(--line-d); color:var(--cream);"></textarea>
       </div>
       <button type="submit" class="form-submit">Send message →</button>
